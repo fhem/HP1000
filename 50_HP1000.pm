@@ -468,7 +468,6 @@ sub HP1000_CGI() {
         }
 
         if (   !defined( $webArgs->{softwaretype} )
-            || !defined( $webArgs->{dateutc} )
             || !defined( $webArgs->{action} ) )
         {
             Log3 $name, 5,
@@ -521,11 +520,11 @@ sub HP1000_CGI() {
     $hash->{SWVERSION}   = $webArgs->{softwaretype};
     $hash->{INTERVAL}    = (
         $hash->{SYSTEMTIME_UTC}
-        ? time_str2num( $webArgs->{dateutc} ) -
-          time_str2num( $hash->{SYSTEMTIME_UTC} )
+        ? strftime('%s',gmtime()) -
+          $hash->{SYSTEMTIME_UTC}
         : 0
     );
-    $hash->{SYSTEMTIME_UTC} = $webArgs->{dateutc};
+    $hash->{SYSTEMTIME_UTC} = strftime('%s',gmtime());
     $hash->{UPLOAD_TYPE}    = "default";
     $hash->{UPLOAD_TYPE}    = "customize"
       if ( defined( $webArgs->{solarradiation} ) );
