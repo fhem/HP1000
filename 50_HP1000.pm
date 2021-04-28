@@ -521,10 +521,10 @@ sub HP1000_CGI() {
     $hash->{INTERVAL}    = (
         $hash->{SYSTEMTIME_UTC}
         ? strftime('%s',gmtime()) -
-          $hash->{SYSTEMTIME_UTC}
+          strftime('%s',$hash->{SYSTEMTIME_UTC})
         : 0
     );
-    $hash->{SYSTEMTIME_UTC} = strftime('%s',gmtime());
+    $hash->{SYSTEMTIME_UTC} = gmtime();
     $hash->{UPLOAD_TYPE}    = "default";
     $hash->{UPLOAD_TYPE}    = "customize"
       if ( defined( $webArgs->{solarradiation} ) );
